@@ -28,5 +28,13 @@
   },
   "devDependencies": {
     "nodemon": "^3.1.10"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zylpheon/TheZylpheon.git"
+  },
+  "bugs": {
+    "url": "https://github.com/zylpheon/TheZylpheon/issues"
+  },
+  "homepage": "https://github.com/zylpheon/TheZylpheon#readme"
 }
