@@ -18,14 +18,6 @@
     box-shadow: 0 20px 40px rgba(139, 92, 246, 0.3);
 }
 
-.modal {
-    display: none;
-}
-
-.modal.active {
-    display: flex;
-}
-
 .animate-fade-in {
     animation: fadeIn 0.5s ease-in;
 }
@@ -52,4 +44,18 @@
 .filter-btn.active {
     background-color: #7c3aed !important;
     color: white !important;
+}
+
+.modal {
+    display: none !important;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 50;
+}
+
+.modal.active {
+    display: flex !important;
 }

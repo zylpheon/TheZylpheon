@@ -17,18 +17,50 @@ function setupEventListeners() {
         document.getElementById('registerModal').classList.remove('active');
     });
     document.getElementById('cartBtn')?.addEventListener('click', () => {
-        document.getElementById('cartModal').classList.add('active');
-        displayCartItems();
+        const cartModal = document.getElementById('cartModal');
+        if (cartModal) {
+            cartModal.style.display = 'flex';
+            cartModal.classList.add('active');
+            displayCartItems();
+        }
     });
-    document.getElementById('closeCart')?.addEventListener('click', () => {
-        document.getElementById('cartModal').classList.remove('active');
-    });
+    const closeCartBtn = document.getElementById('closeCart');
+    if (closeCartBtn) {
+        closeCartBtn.addEventListener('click', (e) => {
+            console.log('Close cart clicked');
+            e.preventDefault();
+            e.stopPropagation();
+            const cartModal = document.getElementById('cartModal');
+            if (cartModal) {
+                cartModal.style.display = 'none';
+                cartModal.classList.remove('active');
+            }
+        });
+    }
     document.getElementById('shopNowBtn')?.addEventListener('click', () => {
         document.getElementById('products').scrollIntoView({ behavior: 'smooth' });
     });
-    window.addEventListener('click', (e) => {
-        if (e.target.classList.contains('modal')) {
-            e.target.classList.remove('active');
+    document.addEventListener('click', (e) => {
+        const cartModal = document.getElementById('cartModal');
+        if (e.target === cartModal) {
+            cartModal.style.display = 'none';
+            cartModal.classList.remove('active');
+        }
+        const loginModal = document.getElementById('loginModal');
+        if (e.target === loginModal) {
+            loginModal.classList.remove('active');
+        }
+        const registerModal = document.getElementById('registerModal');
+        if (e.target === registerModal) {
+            registerModal.classList.remove('active');
+        }
+    });
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            document.querySelectorAll('.modal').forEach(modal => {
+                modal.style.display = 'none';
+                modal.classList.remove('active');
+            });
         }
     });
     document.getElementById('loginForm')?.addEventListener('submit', handleLogin);
@@ -57,9 +89,27 @@ function setupEventListeners() {
     window.addEventListener('online', function () {
         showNotification('Koneksi tersambung kembali', 'success');
     });
+
     window.addEventListener('offline', function () {
         showNotification('Koneksi terputus', 'error');
     });
+}
+function closeCartModal() {
+    const cartModal = document.getElementById('cartModal');
+    if (cartModal) {
+        cartModal.style.display = 'none';
+        cartModal.classList.remove('active');
+        console.log('Cart modal closed');
+    }
+}
+function openCartModal() {
+    const cartModal = document.getElementById('cartModal');
+    if (cartModal) {
+        cartModal.style.display = 'flex';
+        cartModal.classList.add('active');
+        displayCartItems();
+        console.log('Cart modal opened');
+    }
 }
 function showNotification(message, type) {
     const existingNotifications = document.querySelectorAll('.notification');
@@ -69,6 +119,10 @@ function showNotification(message, type) {
     notification.textContent = message;
     document.body.appendChild(notification);
     setTimeout(() => {
-        notification.remove();
+        if (notification.parentNode) {
+            notification.remove();
+        }
     }, 3000);
 }
+window.closeCartModal = closeCartModal;
+window.openCartModal = openCartModal;
