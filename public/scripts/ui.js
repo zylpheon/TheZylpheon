@@ -38,7 +38,7 @@ function setupEventListeners() {
         });
     }
     document.getElementById('shopNowBtn')?.addEventListener('click', () => {
-        document.getElementById('products').scrollIntoView({ behavior: 'smooth' });
+        document.getElementById('categories').scrollIntoView({ behavior: 'smooth' });
     });
     document.addEventListener('click', (e) => {
         const cartModal = document.getElementById('cartModal');
