@@ -107,6 +107,11 @@
     width: 100%;
 }
 
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 80px;
+}
+
 body {
     padding-top: 80px;
 }

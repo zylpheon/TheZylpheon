@@ -22,10 +22,12 @@
                     <h1 class="text-2xl font-bold text-white drop-shadow-lg tracking-wide">TokoBaju</h1>
                 </div>
                 <div class="hidden md:flex space-x-8">
-                    <a href="#"
+                    <a href="#beranda"
                         class="nav-link text-white/90 hover:text-white transition-all duration-300 relative">Beranda</a>
                     <a href="#categories"
                         class="nav-link text-white/90 hover:text-white transition-all duration-300 relative">Kategori</a>
+                    <a href="#products"
+                        class="nav-link text-white/90 hover:text-white transition-all duration-300 relative">Produk</a>
                     <a href="#contact"
                         class="nav-link text-white/90 hover:text-white transition-all duration-300 relative">Kontak</a>
                 </div>
@@ -49,7 +51,7 @@
             </div>
         </div>
     </nav>
-    <section class="gradient-bg py-20">
+    <section id="beranda" class="gradient-bg py-20">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 class="text-5xl md:text-6xl font-bold mb-6 animate-fade-in">
                 Fashion Terbaru
@@ -66,7 +68,7 @@
     <section id="categories" class="py-16 bg-gray-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h3 class="text-3xl font-bold text-center mb-12 gradient-text">Kategori Produk</h3>
-            <div id="categoriesGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+            <div id="categoriesGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
                 <div class="loading">
                     <i class="fas fa-spinner fa-spin text-2xl text-purple-400"></i>
                 </div>
@@ -175,23 +177,14 @@
     </div>
     <footer id="contact" class="bg-gray-800 py-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="grid grid-cols-2 gap-8">
                 <div>
-                    <h4 class="text-lg font-semibold mb-4 gradient-text">TokoBaju</h4>
+                    <h4 class="text-lg font-semibold mb-4">TokoBaju</h4>
                     <p class="text-gray-400">Fashion terbaik dengan kualitas premium untuk gaya hidup modern Anda.</p>
                 </div>
-                <div>
-                    <h4 class="text-lg font-semibold mb-4">Kategori</h4>
-                    <ul class="space-y-2 text-gray-400">
-                        <li><a href="#" class="hover:text-purple-400 transition-colors">Kemeja</a></li>
-                        <li><a href="#" class="hover:text-purple-400 transition-colors">T-Shirt</a></li>
-                        <li><a href="#" class="hover:text-purple-400 transition-colors">Dress</a></li>
-                        <li><a href="#" class="hover:text-purple-400 transition-colors">Jeans</a></li>
-                    </ul>
-                </div>
-                <div>
+                <div class="text-right">
                     <h4 class="text-lg font-semibold mb-4">Ikuti Kami</h4>
-                    <div class="flex space-x-4 mb-4">
+                    <div class="flex space-x-4 mb-4 justify-end">
                         <a href="#" class="text-gray-400 hover:text-purple-400 transition-colors"><i
                                 class="fab fa-facebook text-xl"></i></a>
                         <a href="#" class="text-gray-400 hover:text-purple-400 transition-colors"><i

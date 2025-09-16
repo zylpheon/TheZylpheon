@@ -18,6 +18,7 @@ async function loadCategories() {
 function displayCategories() {
     const grid = document.getElementById('categoriesGrid');
     if (!grid) return;
+
     if (categories.length === 0) {
         grid.innerHTML = `
             <div class="col-span-full text-center text-gray-400">
@@ -26,12 +27,23 @@ function displayCategories() {
         `;
         return;
     }
-    grid.innerHTML = categories.map(category => `
+
+    // Tambahkan opsi "Semua" di awal
+    const allCategoryHtml = `
+        <div class="bg-gray-700 rounded-lg p-6 text-center card-hover cursor-pointer" onclick="filterProducts('all')">
+            <i class="fas fa-list text-3xl text-purple-400 mb-4"></i>
+            <h4 class="font-semibold">Semua</h4>
+        </div>
+    `;
+
+    const categoriesHtml = categories.map(category => `
         <div class="bg-gray-700 rounded-lg p-6 text-center card-hover cursor-pointer" onclick="filterProducts('${category.id}')">
             <i class="fas fa-tshirt text-3xl text-purple-400 mb-4"></i>
             <h4 class="font-semibold">${category.name}</h4>
         </div>
     `).join('');
+
+    grid.innerHTML = allCategoryHtml + categoriesHtml;
 }
 function displayCategoriesError() {
     const grid = document.getElementById('categoriesGrid');
