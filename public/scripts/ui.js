@@ -91,7 +91,7 @@ function setupEventListeners() {
         AppUtils.refreshData();
     });
     window.addEventListener('offline', function () {
-        showNotification('Mode offline - menampilkan data terbatas', 'warning');
+        showNotification('Tidak ada koneksi internet', 'warning');
     });
 }
 function closeCartModal() {
@@ -140,10 +140,11 @@ function showDatabaseStatus(isConnected) {
     if (existingIndicator) {
         existingIndicator.remove();
     }
+
     if (!isConnected) {
         const indicator = document.createElement('div');
-        indicator.className = 'db-status fixed top-16 left-4 z-40 px-4 py-2 rounded-lg bg-yellow-500 text-white text-sm font-medium';
-        indicator.innerHTML = '<i class="fas fa-exclamation-triangle mr-2"></i>Mode Offline';
+        indicator.className = 'db-status fixed top-16 left-4 z-40 px-4 py-2 rounded-lg bg-red-500 text-white text-sm font-medium';
+        indicator.innerHTML = '<i class="fas fa-exclamation-triangle mr-2"></i>Database Offline';
         document.body.appendChild(indicator);
     }
 }

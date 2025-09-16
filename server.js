@@ -4,7 +4,6 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const cors = require('cors');
 const path = require('path');
-const fs = require('fs').promises;
 require('dotenv').config();
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -31,15 +30,6 @@ async function initDatabase() {
         isDbConnected = false;
     }
 }
-async function loadJsonData(filename) {
-    try {
-        const data = await fs.readFile(path.join(__dirname, 'public', 'temporary-data', filename), 'utf8');
-        return JSON.parse(data);
-    } catch (error) {
-        console.error(`Error loading ${filename}:`, error);
-        return [];
-    }
-}
 const verifyToken = (req, res, next) => {
     const token = req.header('Authorization')?.replace('Bearer ', '');
     if (!token) {
@@ -54,85 +44,55 @@ const verifyToken = (req, res, next) => {
     }
 };
 app.get('/api/products', async (req, res) => {
+    if (!isDbConnected) {
+        return res.status(503).json({ message: 'Products not available - database offline' });
+    }
+
     try {
-        if (isDbConnected) {
-            const [rows] = await db.execute(`
-                SELECT p.*, c.name as category_name 
-                FROM products p 
-                LEFT JOIN categories c ON p.category_id = c.id
-            `);
-            res.json(rows);
-        } else {
-            const products = await loadJsonData('products.json');
-            const categories = await loadJsonData('categories.json');
-            const productsWithCategories = products.map(product => {
-                const category = categories.find(cat => cat.id === product.category_id);
-                return {
-                    ...product,
-                    category_name: category ? category.name : null
-                };
-            });
-            res.json(productsWithCategories);
-        }
+        const [rows] = await db.execute(`
+            SELECT p.*, c.name as category_name 
+            FROM products p 
+            LEFT JOIN categories c ON p.category_id = c.id
+        `);
+        res.json(rows);
     } catch (error) {
         console.error('Error fetching products:', error);
-        try {
-            const products = await loadJsonData('products.json');
-            res.json(products);
-        } catch (fallbackError) {
-            res.status(500).json({ message: 'Error fetching products', error });
-        }
+        res.status(500).json({ message: 'Error fetching products', error });
     }
 });
 app.get('/api/products/:id', async (req, res) => {
+    if (!isDbConnected) {
+        return res.status(503).json({ message: 'Product not available - database offline' });
+    }
+
     try {
-        if (isDbConnected) {
-            const [rows] = await db.execute(`
-                SELECT p.*, c.name as category_name 
-                FROM products p 
-                LEFT JOIN categories c ON p.category_id = c.id 
-                WHERE p.id = ?
-            `, [req.params.id]);
-            if (rows.length === 0) {
-                return res.status(404).json({ message: 'Product not found' });
-            }
-            res.json(rows[0]);
-        } else {
-            const products = await loadJsonData('products.json');
-            const categories = await loadJsonData('categories.json');
-            const product = products.find(p => p.id == req.params.id);
-            if (!product) {
-                return res.status(404).json({ message: 'Product not found' });
-            }
-            const category = categories.find(cat => cat.id === product.category_id);
-            const productWithCategory = {
-                ...product,
-                category_name: category ? category.name : null
-            };
-            res.json(productWithCategory);
+        const [rows] = await db.execute(`
+            SELECT p.*, c.name as category_name 
+            FROM products p 
+            LEFT JOIN categories c ON p.category_id = c.id 
+            WHERE p.id = ?
+        `, [req.params.id]);
+
+        if (rows.length === 0) {
+            return res.status(404).json({ message: 'Product not found' });
         }
+        res.json(rows[0]);
     } catch (error) {
         console.error('Error fetching product:', error);
         res.status(500).json({ message: 'Error fetching product', error });
     }
 });
 app.get('/api/categories', async (req, res) => {
+    if (!isDbConnected) {
+        return res.status(503).json({ message: 'Categories not available - database offline' });
+    }
+
     try {
-        if (isDbConnected) {
-            const [rows] = await db.execute('SELECT * FROM categories');
-            res.json(rows);
-        } else {
-            const categories = await loadJsonData('categories.json');
-            res.json(categories);
-        }
+        const [rows] = await db.execute('SELECT * FROM categories');
+        res.json(rows);
     } catch (error) {
         console.error('Error fetching categories:', error);
-        try {
-            const categories = await loadJsonData('categories.json');
-            res.json(categories);
-        } catch (fallbackError) {
-            res.status(500).json({ message: 'Error fetching categories', error });
-        }
+        res.status(500).json({ message: 'Error fetching categories', error });
     }
 });
 app.post('/api/register', async (req, res) => {

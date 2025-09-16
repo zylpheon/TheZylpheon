@@ -12,7 +12,6 @@ async function loadCategories() {
         }
     } catch (error) {
         console.error('Error loading categories:', error);
-        showNotification('Menggunakan data offline untuk kategori', 'warning');
         displayCategoriesError();
     }
 }
@@ -45,12 +44,13 @@ function displayCategories() {
 function displayCategoriesError() {
     const grid = document.getElementById('categoriesGrid');
     if (!grid) return;
+
     grid.innerHTML = `
         <div class="col-span-full text-center">
             <div class="bg-gray-700 rounded-lg p-6">
-                <i class="fas fa-wifi text-2xl text-yellow-400 mb-2"></i>
-                <p class="text-gray-400">Data kategori tidak tersedia</p>
-                <p class="text-sm text-gray-500 mb-3">Periksa koneksi internet Anda</p>
+                <i class="fas fa-database text-2xl text-red-400 mb-2"></i>
+                <p class="text-gray-400">Database tidak tersedia</p>
+                <p class="text-sm text-gray-500 mb-3">Pastikan database MySQL berjalan</p>
                 <button onclick="loadCategories()" class="mt-2 px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700 transition-colors">
                     <i class="fas fa-refresh mr-2"></i>Coba Lagi
                 </button>
@@ -72,7 +72,6 @@ async function loadProducts() {
         }
     } catch (error) {
         console.error('Error loading products:', error);
-        showNotification('Menggunakan data offline untuk produk', 'warning');
         displayProductsError();
     }
 }
@@ -114,12 +113,13 @@ function displayProducts(productsToShow) {
 function displayProductsError() {
     const grid = document.getElementById('productsGrid');
     if (!grid) return;
+
     grid.innerHTML = `
         <div class="col-span-full text-center">
             <div class="bg-gray-800 rounded-lg p-6">
-                <i class="fas fa-wifi text-2xl text-yellow-400 mb-2"></i>
-                <p class="text-gray-400">Data produk tidak tersedia</p>
-                <p class="text-sm text-gray-500 mb-3">Periksa koneksi internet Anda</p>
+                <i class="fas fa-database text-2xl text-red-400 mb-2"></i>
+                <p class="text-gray-400">Database tidak tersedia</p>
+                <p class="text-sm text-gray-500 mb-3">Pastikan database MySQL berjalan</p>
                 <button onclick="loadProducts()" class="mt-2 px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700 transition-colors">
                     <i class="fas fa-refresh mr-2"></i>Coba Lagi
                 </button>
