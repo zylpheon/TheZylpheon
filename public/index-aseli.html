@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Toko Baju Online</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="./styles/index.css">
+</head>
+
+<body class="bg-gray-900 text-white">
+    <nav
+        class="glassmorphism-navbar fixed top-0 left-0 right-0 z-50 backdrop-blur-lg bg-white/10 border-b border-white/20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center space-x-4">
+                    <div class="glass-icon-wrapper">
+                        <i class="fas fa-tshirt text-2xl text-white drop-shadow-lg"></i>
+                    </div>
+                    <h1 class="text-2xl font-bold text-white drop-shadow-lg tracking-wide">TokoBaju</h1>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#beranda"
+                        class="nav-link text-white/90 hover:text-white transition-all duration-300 relative">Beranda</a>
+                    <a href="#categories"
+                        class="nav-link text-white/90 hover:text-white transition-all duration-300 relative">Kategori</a>
+                    <a href="#products"
+                        class="nav-link text-white/90 hover:text-white transition-all duration-300 relative">Produk</a>
+                    <a href="#contact"
+                        class="nav-link text-white/90 hover:text-white transition-all duration-300 relative">Kontak</a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button id="cartBtn"
+                        class="glass-btn relative text-white/90 hover:text-white transition-all duration-300 p-2 rounded-xl">
+                        <i class="fas fa-shopping-cart text-xl"></i>
+                        <span id="cartCount"
+                            class="absolute -top-1 -right-1 bg-gradient-to-r from-pink-500 to-purple-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-semibold shadow-lg">0</span>
+                    </button>
+                    <button id="loginBtn"
+                        class="glass-btn bg-white/20 backdrop-blur-sm text-white px-6 py-2 rounded-xl hover:bg-white/30 transition-all duration-300 font-medium border border-white/30">
+                        Login
+                    </button>
+                    <button id="userBtn"
+                        class="hidden glass-btn bg-gradient-to-r from-purple-500/80 to-pink-500/80 backdrop-blur-sm text-white px-6 py-2 rounded-xl hover:from-purple-600/80 hover:to-pink-600/80 transition-all duration-300 border border-white/30">
+                        <i class="fas fa-user mr-2"></i>
+                        <span id="userName"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <section id="beranda" class="gradient-bg py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-5xl md:text-6xl font-bold mb-6 animate-fade-in">
+                Fashion Terbaru
+            </h2>
+            <p class="text-xl mb-8 text-purple-100 animate-fade-in">
+                Temukan koleksi pakaian terbaik dengan kualitas premium
+            </p>
+            <button id="shopNowBtn"
+                class="bg-white text-purple-600 px-8 py-4 rounded-full text-lg font-semibold hover:bg-pink-100 transition-colors transform hover:scale-105">
+                Belanja Sekarang
+            </button>
+        </div>
+    </section>
+    <section id="categories" class="py-16 bg-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h3 class="text-3xl font-bold text-center mb-12 gradient-text">Kategori Produk</h3>
+            <div id="categoriesGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+                <div class="loading">
+                    <i class="fas fa-spinner fa-spin text-2xl text-purple-400"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="products" class="py-16 bg-gray-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div id="productsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="loading">
+                    <i class="fas fa-spinner fa-spin text-2xl text-purple-400"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div id="loginModal" class="modal fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-gray-800 rounded-lg p-8 max-w-md w-full mx-4">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl font-bold gradient-text">Login</h3>
+                <button id="closeLogin" class="text-gray-400 hover:text-white text-2xl">&times;</button>
+            </div>
+            <form id="loginForm">
+                <div class="mb-4">
+                    <label class="block text-sm font-medium mb-2">Email</label>
+                    <input type="email" id="loginEmail"
+                        class="w-full px-4 py-2 bg-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 text-white"
+                        required>
+                </div>
+                <div class="mb-6">
+                    <label class="block text-sm font-medium mb-2">Password</label>
+                    <input type="password" id="loginPassword"
+                        class="w-full px-4 py-2 bg-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 text-white"
+                        required>
+                </div>
+                <button type="submit"
+                    class="w-full gradient-bg py-3 rounded-lg font-semibold hover:opacity-90 transition-opacity">
+                    Login
+                </button>
+            </form>
+            <p class="mt-4 text-center text-gray-400">
+                Belum punya akun? <button id="showRegister"
+                    class="text-purple-400 hover:text-purple-300">Daftar</button>
+            </p>
+        </div>
+    </div>
+    <div id="registerModal" class="modal fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-gray-800 rounded-lg p-8 max-w-md w-full mx-4">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl font-bold gradient-text">Daftar</h3>
+                <button id="closeRegister" class="text-gray-400 hover:text-white text-2xl">&times;</button>
+            </div>
+            <form id="registerForm">
+                <div class="mb-4">
+                    <label class="block text-sm font-medium mb-2">Username</label>
+                    <input type="text" id="registerUsername"
+                        class="w-full px-4 py-2 bg-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 text-white"
+                        required>
+                </div>
+                <div class="mb-4">
+                    <label class="block text-sm font-medium mb-2">Email</label>
+                    <input type="email" id="registerEmail"
+                        class="w-full px-4 py-2 bg-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 text-white"
+                        required>
+                </div>
+                <div class="mb-4">
+                    <label class="block text-sm font-medium mb-2">Password</label>
+                    <input type="password" id="registerPassword"
+                        class="w-full px-4 py-2 bg-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 text-white"
+                        required>
+                </div>
+                <div class="mb-6">
+                    <label class="block text-sm font-medium mb-2">Nama Lengkap</label>
+                    <input type="text" id="registerFullName"
+                        class="w-full px-4 py-2 bg-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 text-white"
+                        required>
+                </div>
+                <button type="submit"
+                    class="w-full gradient-bg py-3 rounded-lg font-semibold hover:opacity-90 transition-opacity">
+                    Daftar
+                </button>
+            </form>
+            <p class="mt-4 text-center text-gray-400">
+                Sudah punya akun? <button id="showLogin" class="text-purple-400 hover:text-purple-300">Login</button>
+            </p>
+        </div>
+    </div>
+    <div id="cartModal" class="modal fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-gray-800 rounded-lg p-8 max-w-2xl w-full mx-4 max-h-96 overflow-y-auto">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl font-bold gradient-text">Keranjang Belanja</h3>
+                <button id="closeCart" class="text-gray-400 hover:text-white text-2xl">&times;</button>
+            </div>
+            <div id="cartItems" class="space-y-4">
+            </div>
+            <div class="mt-6 pt-6 border-t border-gray-600">
+                <div class="flex justify-between items-center mb-4">
+                    <span class="text-lg font-semibold">Total:</span>
+                    <span id="cartTotal" class="text-xl font-bold gradient-text">Rp 0</span>
+                </div>
+                <button id="checkoutBtn"
+                    class="w-full gradient-bg py-3 rounded-lg font-semibold hover:opacity-90 transition-opacity">
+                    Checkout
+                </button>
+            </div>
+        </div>
+    </div>
+    <footer id="contact" class="bg-gray-800 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 gap-8">
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">TokoBaju</h4>
+                    <p class="text-gray-400">Fashion terbaik dengan kualitas premium untuk gaya hidup modern Anda.</p>
+                </div>
+                <div class="text-right">
+                    <h4 class="text-lg font-semibold mb-4">Ikuti Kami</h4>
+                    <div class="flex space-x-4 mb-4 justify-end">
+                        <a href="#" class="text-gray-400 hover:text-purple-400 transition-colors"><i
+                                class="fab fa-facebook text-xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-purple-400 transition-colors"><i
+                                class="fab fa-instagram text-xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-purple-400 transition-colors"><i
+                                class="fab fa-twitter text-xl"></i></a>
+                    </div>
+                    <div class="text-gray-400 text-sm">
+                        <p class="mb-1">📧 info@tokobaju.com</p>
+                        <p class="mb-1">📱 +62 812-3456-7890</p>
+                        <p>📍 Yogyakarta, Indonesia</p>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-600 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2025 TokoBaju. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    <script src="./scripts/config.js"></script>
+    <script src="./scripts/auth.js"></script>
+    <script src="./scripts/products.js"></script>
+    <script src="./scripts/cart.js"></script>
+    <script src="./scripts/ui.js"></script>
+    <script src="./scripts/app.js"></script>
+</body>
+
+</html>
