@@ -12,13 +12,13 @@ async function loadCategories() {
         }
     } catch (error) {
         console.error('Error loading categories:', error);
+        showNotification('Menggunakan data offline untuk kategori', 'warning');
         displayCategoriesError();
     }
 }
 function displayCategories() {
     const grid = document.getElementById('categoriesGrid');
     if (!grid) return;
-
     if (categories.length === 0) {
         grid.innerHTML = `
             <div class="col-span-full text-center text-gray-400">
@@ -27,15 +27,12 @@ function displayCategories() {
         `;
         return;
     }
-
-    // Tambahkan opsi "Semua" di awal
     const allCategoryHtml = `
         <div class="bg-gray-700 rounded-lg p-6 text-center card-hover cursor-pointer" onclick="filterProducts('all')">
             <i class="fas fa-list text-3xl text-purple-400 mb-4"></i>
             <h4 class="font-semibold">Semua</h4>
         </div>
     `;
-
     const categoriesHtml = categories.map(category => `
         <div class="bg-gray-700 rounded-lg p-6 text-center card-hover cursor-pointer" onclick="filterProducts('${category.id}')">
             <i class="fas fa-tshirt text-3xl text-purple-400 mb-4"></i>
@@ -51,10 +48,11 @@ function displayCategoriesError() {
     grid.innerHTML = `
         <div class="col-span-full text-center">
             <div class="bg-gray-700 rounded-lg p-6">
-                <i class="fas fa-exclamation-triangle text-2xl text-yellow-400 mb-2"></i>
-                <p class="text-gray-400">Gagal memuat kategori</p>
+                <i class="fas fa-wifi text-2xl text-yellow-400 mb-2"></i>
+                <p class="text-gray-400">Data kategori tidak tersedia</p>
+                <p class="text-sm text-gray-500 mb-3">Periksa koneksi internet Anda</p>
                 <button onclick="loadCategories()" class="mt-2 px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700 transition-colors">
-                    Coba Lagi
+                    <i class="fas fa-refresh mr-2"></i>Coba Lagi
                 </button>
             </div>
         </div>
@@ -74,6 +72,7 @@ async function loadProducts() {
         }
     } catch (error) {
         console.error('Error loading products:', error);
+        showNotification('Menggunakan data offline untuk produk', 'warning');
         displayProductsError();
     }
 }
@@ -118,10 +117,11 @@ function displayProductsError() {
     grid.innerHTML = `
         <div class="col-span-full text-center">
             <div class="bg-gray-800 rounded-lg p-6">
-                <i class="fas fa-exclamation-triangle text-2xl text-yellow-400 mb-2"></i>
-                <p class="text-gray-400">Gagal memuat produk</p>
+                <i class="fas fa-wifi text-2xl text-yellow-400 mb-2"></i>
+                <p class="text-gray-400">Data produk tidak tersedia</p>
+                <p class="text-sm text-gray-500 mb-3">Periksa koneksi internet Anda</p>
                 <button onclick="loadProducts()" class="mt-2 px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700 transition-colors">
-                    Coba Lagi
+                    <i class="fas fa-refresh mr-2"></i>Coba Lagi
                 </button>
             </div>
         </div>

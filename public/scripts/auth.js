@@ -42,7 +42,11 @@ async function handleLogin(e) {
         }
     } catch (error) {
         console.error('Login error:', error);
-        showNotification('Terjadi kesalahan saat login', 'error');
+        if (error.message.includes('fetch')) {
+            showNotification('Tidak dapat terhubung ke server. Fitur login tidak tersedia.', 'error');
+        } else {
+            showNotification('Terjadi kesalahan saat login', 'error');
+        }
     }
 }
 async function handleRegister(e) {
@@ -64,11 +68,19 @@ async function handleRegister(e) {
             document.getElementById('loginModal').classList.add('active');
             document.getElementById('registerForm').reset();
         } else {
-            showNotification(data.message || 'Registrasi gagal', 'error');
+            if (response.status === 503) {
+                showNotification('Registrasi tidak tersedia - server offline', 'error');
+            } else {
+                showNotification(data.message || 'Registrasi gagal', 'error');
+            }
         }
     } catch (error) {
         console.error('Register error:', error);
-        showNotification('Terjadi kesalahan saat registrasi', 'error');
+        if (error.message.includes('fetch')) {
+            showNotification('Tidak dapat terhubung ke server. Fitur registrasi tidak tersedia.', 'error');
+        } else {
+            showNotification('Terjadi kesalahan saat registrasi', 'error');
+        }
     }
 }
 function handleLogout() {

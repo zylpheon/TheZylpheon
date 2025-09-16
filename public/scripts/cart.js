@@ -20,13 +20,19 @@ async function addToCart(productId) {
         if (response.ok) {
             showNotification('Produk ditambahkan ke keranjang!', 'success');
             loadCart();
+        } else if (response.status === 503) {
+            showNotification('Keranjang tidak tersedia - database offline', 'error');
         } else {
             const data = await response.json();
             showNotification(data.message || 'Gagal menambahkan ke keranjang', 'error');
         }
     } catch (error) {
         console.error('Add to cart error:', error);
-        showNotification('Terjadi kesalahan', 'error');
+        if (error.message.includes('fetch')) {
+            showNotification('Tidak dapat terhubung ke server. Fitur keranjang tidak tersedia.', 'error');
+        } else {
+            showNotification('Terjadi kesalahan', 'error');
+        }
     }
 }
 async function loadCart() {
@@ -40,11 +46,17 @@ async function loadCart() {
         if (response.ok) {
             cart = await response.json();
             updateCartCount();
+        } else if (response.status === 503) {
+            console.log('Cart service unavailable - database offline');
+            cart = [];
+            updateCartCount();
         } else {
             console.error('Failed to load cart');
         }
     } catch (error) {
         console.error('Error loading cart:', error);
+        cart = [];
+        updateCartCount();
     }
 }
 function updateCartCount() {
@@ -56,7 +68,7 @@ function displayCartItems() {
     if (!cartItems) return;
     if (cart.length === 0) {
         cartItems.innerHTML = '<p class="text-center text-gray-400 py-8">Keranjang kosong</p>';
-        cartTotal.textContent = 'Rp 0';
+        if (cartTotal) cartTotal.textContent = 'Rp 0';
         return;
     }
     let total = 0;
@@ -79,7 +91,6 @@ function displayCartItems() {
             </div>
         `;
     }).join('');
-
     if (cartTotal) {
         cartTotal.textContent = `Rp ${total.toLocaleString('id-ID')}`;
     }
@@ -96,11 +107,17 @@ async function removeFromCart(cartItemId) {
             showNotification('Item dihapus dari keranjang', 'success');
             loadCart();
             displayCartItems();
+        } else if (response.status === 503) {
+            showNotification('Tidak dapat menghapus - database offline', 'error');
         } else {
             showNotification('Gagal menghapus item', 'error');
         }
     } catch (error) {
         console.error('Remove from cart error:', error);
-        showNotification('Gagal menghapus item', 'error');
+        if (error.message.includes('fetch')) {
+            showNotification('Tidak dapat terhubung ke server', 'error');
+        } else {
+            showNotification('Gagal menghapus item', 'error');
+        }
     }
 }
