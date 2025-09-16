@@ -33,7 +33,7 @@ async function initDatabase() {
 }
 async function loadJsonData(filename) {
     try {
-        const data = await fs.readFile(path.join(__dirname, 'temporary_data', filename), 'utf8');
+        const data = await fs.readFile(path.join(__dirname, 'public', 'temporary-data', filename), 'utf8');
         return JSON.parse(data);
     } catch (error) {
         console.error(`Error loading ${filename}:`, error);
