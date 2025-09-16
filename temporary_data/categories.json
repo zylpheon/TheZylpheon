@@ -1,0 +1,32 @@
+[
+    {
+        "id": 1,
+        "name": "Kemeja",
+        "description": "Koleksi kemeja pria dan wanita",
+        "created_at": "2025-09-15 06:52:55"
+    },
+    {
+        "id": 2,
+        "name": "T-Shirt",
+        "description": "Kaos casual untuk sehari-hari",
+        "created_at": "2025-09-15 06:52:55"
+    },
+    {
+        "id": 3,
+        "name": "Dress",
+        "description": "Dress wanita untuk berbagai acara",
+        "created_at": "2025-09-15 06:52:55"
+    },
+    {
+        "id": 4,
+        "name": "Jeans",
+        "description": "Celana jeans premium",
+        "created_at": "2025-09-15 06:52:55"
+    },
+    {
+        "id": 5,
+        "name": "Jacket",
+        "description": "Jaket dan outerwear",
+        "created_at": "2025-09-15 06:52:55"
+    }
+]
